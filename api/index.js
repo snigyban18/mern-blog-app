@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect(process.env.MONGO_URL);
 
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
@@ -134,7 +133,19 @@ app.get('/post/:id', async (req, res) => {
   res.json(postDoc);
 })
 
-app.listen(process.env.PORT, () => {
-  console.log('server started');
-});
-//
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
+//Connect to the database before listening
+connectDB().then(() => {
+    app.listen(process.env.PORT, () => {
+        console.log("listening for requests");
+    })
+})
