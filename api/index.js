@@ -145,7 +145,7 @@ const connectDB = async () => {
 
 //Connect to the database before listening
 connectDB().then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen(3000, () => {
         console.log("listening for requests");
     })
 })
