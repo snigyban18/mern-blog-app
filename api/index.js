@@ -14,6 +14,7 @@ const fs = require('fs');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.JWT_SECRET;
+console.log(process.env.MONGO_URL)
 
 app.use(cors({credentials:true, origin: process.env.ORIGIN_URL}));
 app.use(express.json());
